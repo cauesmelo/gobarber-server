@@ -107,4 +107,22 @@ describe('UpdateProfile', () => {
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
+
+  it('should not be able to update without a valid user id ', async () => {
+    await fakeUsersRepository.create({
+      name: 'John Doe',
+      email: 'Johndoe@example.com',
+      password: '123321',
+    });
+
+    await expect(
+      updateProfile.execute({
+        user_id: 'non existing id',
+        name: 'John What',
+        email: 'Johnjohn@example.com',
+        old_password: 'wrong-old-password',
+        password: '123123',
+      }),
+    ).rejects.toBeInstanceOf(AppError);
+  });
 });
