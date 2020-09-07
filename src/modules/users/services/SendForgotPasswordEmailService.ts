@@ -37,8 +37,6 @@ export default class SendForgotPasswordEmailService {
       'forgot_password.hbs',
     );
 
-    await this.userTokensRepository.generate(user.id);
-
     await this.mailProvider.sendMail({
       to: {
         name: user.name,
@@ -50,7 +48,7 @@ export default class SendForgotPasswordEmailService {
         variables: {
           name: user.name,
           token,
-          link: `${process.env.APP_WEB_URL}/reset_password?token=${token}`,
+          link: `${process.env.APP_WEB_URL}/reset-password?token=${token}`,
         },
       },
     });
