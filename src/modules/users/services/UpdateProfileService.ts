@@ -10,7 +10,7 @@ interface IRequest {
   user_id: string;
   name: string;
   email: string;
-  old_password?: string;
+  oldPassword?: string;
   password?: string;
 }
 
@@ -29,10 +29,9 @@ export default class UpdateProfileService {
     name,
     email,
     password,
-    old_password,
+    oldPassword,
   }: IRequest): Promise<User> {
     const user = await this.usersRepository.findById(user_id);
-
     const userWithUpdatedEmail = await this.usersRepository.findByEmail(email);
     if (userWithUpdatedEmail) {
       if (userWithUpdatedEmail.id !== user_id) {
@@ -43,13 +42,13 @@ export default class UpdateProfileService {
       throw new AppError('User not found!');
     }
 
-    if (password && !old_password) {
+    if (password && !oldPassword) {
       throw new AppError('Old password not informed.');
     }
 
-    if (password && old_password) {
+    if (password && oldPassword) {
       const checkOldPassword = await this.hashProvider.compareHash(
-        old_password,
+        oldPassword,
         user.password,
       );
       if (!checkOldPassword) {
