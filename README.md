@@ -1,4 +1,4 @@
-# gobarber-back
+# gobarber-backend
  Project made for learning purposes.
 
 ## Built with
